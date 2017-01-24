@@ -1,0 +1,5 @@
+{
+    "require": {
+        "evercall/api-sdk": "dev-development"
+    }
+}
