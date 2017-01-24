@@ -100,6 +100,25 @@ final class Evercall_Webhooks_Actions_Webhooks extends NF_Abstracts_Action
 		return $args;
 	}
 
+	private function parseNinjaArgs( $wh_args ) {
+
+		$args = array();
+
+		foreach ($wh_args as $arg_data) {
+			$args[$arg_data['key']] = $arg_data['value'];
+		}
+
+		foreach ($args as $key => $value) {
+			if(stripos($args[$key], ';'))
+				$args[$key] = explode(';',$args[$key]);
+		}
+
+		// remove all occurences of ;
+		$args = str_replace(';','',$args);
+
+		return $args;
+	}
+
 	/**
 	 * @param $ec_method
 	 * @param $args
@@ -112,9 +131,8 @@ final class Evercall_Webhooks_Actions_Webhooks extends NF_Abstracts_Action
 		return $client->create();
 	}
 
-    public function process( $action_settings, $form_id, $data )
-	{
-		$args 			= array();
+    public function process( $action_settings, $form_id, $data ) {
+
 		$debug 			= $action_settings['wh-debug-mode'];
 		$sandbox		= ($action_settings['wh-sandbox-mode'] == 1) ? true : false;
 		$dev 			= ($action_settings['wh-dev-mode'] == 1) ? true : false;
@@ -122,7 +140,7 @@ final class Evercall_Webhooks_Actions_Webhooks extends NF_Abstracts_Action
 		$ec_method 		= $action_settings['wh-evercall-method'];
 
 		// parse arguments
-		$args = $this->parseFormData($wh_args, $data);
+		$args = $this->parseNinjaArgs($wh_args);
 
 		// Get client
 		$client = $this->getClient($ec_method, $args, $sandbox, $dev);
@@ -132,10 +150,13 @@ final class Evercall_Webhooks_Actions_Webhooks extends NF_Abstracts_Action
 
 		if ( 1 == $debug ) {
 
+			$data['debug']['form']['webhooks_response'] .= "<dt><strong>Data args: </strong></dt>";
+			$data['debug']['form']['webhooks_response'] .= "<pre>" . print_r($args, true) . "</pre>";
+
 			$data['debug']['form']['webhooks_response'] .= "<dt><strong>Full response: </strong></dt>";
 			$data['debug']['form']['webhooks_response'] .= "<pre>" . print_r($client->getResponse(), true) . "</pre>";
 
-			if($sandbox == false) {
+			if( $sandbox == false ) {
 				$data['debug']['form']['webhooks_response'] .= "<dt><strong>Response Body: </strong></dt>";
 				$data['debug']['form']['webhooks_response'] .= "<pre>" . print_r($client->getResponseBody(true), true) . "</pre>";
 			}

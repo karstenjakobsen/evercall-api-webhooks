@@ -6,6 +6,14 @@ class ClientFactory {
 
 	const PING = 'ping';
 
+	protected $type;
+
+	protected $args;
+
+	protected $sandbox;
+
+	protected $dev;
+
 	public function __construct($type, $args, $sandbox, $dev)
 	{
 		$this->type 	= $type;
