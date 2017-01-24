@@ -26,7 +26,7 @@
      */
     final class Evercall_Webhooks
     {
-        const VERSION = '3.0.3';
+        const VERSION = '1.0.0';
         const SLUG    = 'webhooks';
         const NAME    = 'evercall API Webhooks';
         const AUTHOR  = 'Karsten Jakobsen';
