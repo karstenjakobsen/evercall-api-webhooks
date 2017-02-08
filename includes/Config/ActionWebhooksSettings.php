@@ -1,6 +1,7 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 
 return array(
+	
 
 	/*
 	|--------------------------------------------------------------------------
@@ -12,7 +13,6 @@ return array(
 		'name' => 'wh-evercall-method',
 		'type' => 'select',
 		'group' => 'primary',
-		'value' => 'evercall-method',
 		'label' => __( 'evercall Method', 'evercall-forms-webhooks' ),
 		'options' => array(
 			array(

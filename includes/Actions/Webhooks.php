@@ -114,7 +114,7 @@ final class Evercall_Webhooks_Actions_Webhooks extends NF_Abstracts_Action
 
     public function process( $action_settings, $form_id, $data )
 	{
-		$args 			= array();
+
 		$debug 			= $action_settings['wh-debug-mode'];
 		$sandbox		= ($action_settings['wh-sandbox-mode'] == 1) ? true : false;
 		$dev 			= ($action_settings['wh-dev-mode'] == 1) ? true : false;
